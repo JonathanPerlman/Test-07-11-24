@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeAccess } from "../../store/floorreducer";
-import { setRole } from "../../store/Rolereducer";
+import { setRole } from "../../store/rolereducer";
 import useBuildingData from "../../utils/BuildingDataProvider";
 import optionalroles from "../../data/roles.json";
 import "./Reception.css";
@@ -15,11 +15,15 @@ const Reception: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleChangeAccess = (index: number) => {
-    dispatch(changeAccess(index));
+    dispatch(changeAccess(index));    
   };
 
   const handleSetRole = (index: number) => {
-    dispatch(setRole(index));
+    const role = optionalroles[index];
+    console.log('Selected Role:', role); 
+    dispatch(setRole(role));
+    console.log(currentRole);
+    
   };
 
   return (

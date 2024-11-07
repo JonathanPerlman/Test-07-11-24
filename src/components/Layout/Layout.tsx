@@ -1,35 +1,34 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useBuildingData from "../../utils/BuildingDataProvider";
 import "./Layout.css";
 
-const Layout: React.FC = () => {
+
+const Layout: React.FC<{children:ReactNode}> = ({children}) => {
   const floorAccess = useSelector(
     (state: {
       floorAccess: {
         floorAccess: [boolean, boolean, boolean, boolean, boolean];
       };
     }) => state.floorAccess.floorAccess
+    
   );
   const { getFloorByIndex } = useBuildingData();
-
   return (
     <div className="layout-page">
       <nav className="navbar">
         <h1>מגדל נמרודי</h1>
         <div className="nav-links">
             <Link to="/">Home</Link>
-          {floorAccess.map((floor: boolean, index: number) => (
+          {floorAccess.map((_: boolean, index: number) => (
             <Link key={index} to={`/floor/${index}`}>
               {getFloorByIndex(index)?.purpose || `Floor ${index + 1}`}
             </Link>
           ))}
         </div>
       </nav>
-
-      <Outlet />
-
+      {children}
       <footer className="layout-footer">
         <h2>About מגדל נמרודי</h2>
         <p>
@@ -44,5 +43,4 @@ const Layout: React.FC = () => {
     </div>
   );
 };
-
 export default Layout;
